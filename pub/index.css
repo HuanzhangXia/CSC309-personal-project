@@ -1,0 +1,30 @@
+body{
+	/*background-color: #a3cfce;*/
+	background-color: white;
+	font: 15px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+a {
+ 	text-decoration: none;
+}
+.textb{
+	margin: 30px auto; 
+	width: 80%;
+}
+.btns{
+	margin: auto; 
+	width: 800px;
+}
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #99A6BA;
+    color: #666;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}

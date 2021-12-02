@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>JS Libraries</title>
+    <!-- <script src="dom_load.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="index.css">
+
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Then we load a script that depends on jQuery -->
+    <script defer type="text/javascript" src='/src/SuperBubble.js'></script>
+
+    <!-- Then we load a script that depends on our libraries (and jQuery) -->
+    <script defer type="text/javascript" src='index.js'></script>
+
+
+ </head>
+ <body>
+
+
+    <div id="logo">
+        <img id='logopic' >
+    </div>
+    <div class="textb">
+        <h></h>
+        <h1>Examples</h1>
+        <p>This is the example demonstraion page of the <code>SuperBubble.js</code>. To see the full documentation, please visit <a href ="/docs/index.html">documentation</a>. </p>
+        <h2>RandomBubble + FloatBubble</h2>
+        <p>The following fish tank example shows a simple MovementBubble usage. By clicking on the <code>Add Random Bubble</code>, you will create an element manipulated by the RandomBubble. By clicking on the <code>Add Float Up Bubble</code>, you will create a bubble that will float up to the tank. By clicking on the <code>Add Fish</code>, you will have 50% of chance to create a fish swims to the left/right. By clicking on the <code>Add Star</code>, you will create a star that flows down to the ground of the tank. The star will stay for 10,000 ms until disappear. </p>
+    </div>
+    <!-- <img src="bubble_static.png"> -->
+ 	<div id='board1'>
+        <!-- <img id='background' src="TankBackground.jpg"/> -->
+    </div>
+    <div class='btns'>
+    <button id="randombubble">Add Random Bubble</button>
+    <button id="floatup">Add Float Up Bubble</button>
+    <button id="fish">Add Fish</button>
+    <button id="star">Add Star</button>
+    </div>
+    <div class="textb">
+        <pre><code id="ex1">
+    // Initialize you bubble generator, then start the update. 
+    const bg =  new SuperBubbleGenerator()
+    bg.startUpdate()            
+    const elm1=document.querySelector('#element1')
+
+    const newelm1 = bg.makeElms({
+        moveType: "randombubble", // To create float up bubble, float left/right fish or 
+        float down star, simply change this property to "floatupbubble", "floatleftbubble", 
+        "floatrightbubble" or "floatdownbubble"
+        element: elm1,
+        boardsize: [800,400],
+        speed: [2,2]
+    })
+    newelm1.move.startMove()
+
+        </code></pre>
+        <h2>Combination of the SideRandomBubble and TwinkleBubble</h2>
+        <p>The following example shows a simple combination of MoveBubble and EffectBubble. The star in the bellow moves along the four sides of the board. At the same time, it scales up and down regularly. </p>
+    </div>    
+    <div id='board2'></div>
+    </div>
+    <div class="textb">
+        <pre><code id="ex2">
+    const elm2=document.querySelector('#element2')
+
+    const newelm2 = bg.makeElms({ //You can creat this combination at the same time.
+        moveType: "siderandombubble",
+        element: elm2,
+        boardsize: [800,400],
+        speed: [2,2],
+        moveTime: 10000,
+        effectType: "twinklebubble"
+    })
+
+    //After creating the bubbles, you can allow the star to move and stop randomly.
+    setInterval(function(){
+        if(Math.random()>0.5){
+            newelm2.move.startTimedMove()
+        }
+    }, 1000)    
+    
+    newelm2.effect.startEffect()
+
+        </code></pre>
+        <h2>RotationBubble</h2>
+        <p>The following example shows a simple usage of the RotationBubble. The eight planets rotate around the sun with their period (scaled correspondingly). </p>
+    </div>     
+    <div id='board3'></div>
+    </div>
+    <div class="textb">
+        <pre><code id="ex3">
+    // The following code shows a creation of a single RotationBubble.
+    const elm3=document.querySelector('#element3')
+
+    const newelm3= bg.makeElms({
+        effectType: "rotationbubble",
+        element: elm3,
+        period: 1.2, 
+        clockwise: true
+    })
+    newelm3.effect.startEffect()
+
+        </code></pre>
+        <h2>Combination of the FunctionBubble and TailBubble</h2>
+        <p>The following example shows how to draw a curve of a function by combining the FunctionBubble and TailBubble.</p>
+    </div>         
+    <div id='board4'></div>
+    <div class='btns'> 
+        <button id="sin">Draw Blue Sin Curve</button>
+    </div>
+    </div>
+    <div class="textb">
+        <pre><code id="ex4">
+    const elm4=document.querySelector('#element4')
+
+    const fun=bg.makeElms({
+        moveType: "functionbubble",
+        element: elm4,
+        boardsize: [800,400],
+        moveTime: 20000,
+        clockwise: true,
+        moveFunction: (t)=>{
+            return[30*t/1000,30*Math.sin(t/1000)] //We will create a Sin function here (scalled correspondingly).
+        }
+    })
+    const tail=bg.makeElms({
+        effectType: "tailbubble",
+        element:elm5,
+        makeDOMupdate: 100,
+        boardsize: [800,400],
+        makeDOM: ()=>{
+            const element=document.createElement('div')
+            element.style='width:15px; height:15px; border-radius: 50%; background-color: #124B8C;z-index: 100;'
+            const bo=document.querySelector('#board4')
+            bo.append(element)
+            return element
+        },
+        thickness: 0, //we want to draw a line, so the thickness is 0. By doing so,
+        the line drawn will exactly follows the path of the element.
+        numDOMs:1
+    })
+    fun.move.startTimedMove()
+    tail.effect.startMakeDOM()
+
+        </code></pre>
+        <h2>Combination of the DestinationBubble, GrowFadeBubble and TailBubble</h2>
+        <p>The following example shows how to draw a straught 'magic' line by using DestinationBubble, GrowFadeBubble and TailBubble. </p></div>    
+    <div id='board5'></div> 
+    <div class='btns'>   
+    <button id="line">Draw Colorful Line</button>   
+    </div> 
+    <div class="textb">
+        <code><pre>
+    const elm6=document.querySelector('#element6')
+    const fun=bg.makeElms({
+        moveType: "destinatedbubble", //By using DestinationBubble, the TailBubble will draw a straight line.
+        element: elm6,
+        boardsize: [800,150],
+        moveTime: 20000,
+        moveupdate:100,
+        destination: [600,100]
+    })
+    const tail=bg.makeElms({
+        effectType: "tailbubble",
+        element:elm,
+        makeDOMupdate: 100,
+        boardsize: [800,400],
+        makeTime: 20000,
+        makeDOM: ()=>{
+            // An array that stores the colours for random chooses.
+            const color=['#7EC91A','#124B8C','#FCAF49','#FC90F2','#B6FCC4','#B53710']
+            const element=document.createElement('div')
+            const ran=Math.floor(Math.random()*6)
+            element.style='width:15px; height:15px; border-radius: 50%; background-color: '+color[ran]+';z-index: 100;'
+            const bo=document.querySelector('#board5')
+            bo.append(element)
+            const newbub = bg.makeElms({element:element,effectType: "growfadebubble"})//make a new GrowFadeBubble
+            newbub.effect.startEffect()
+            return element
+        },
+        thickness: 12, // Here we want the elements created spreads around the line
+        numDOMs:1
+    })
+    fun.move.startTimedMove()
+    tail.effect.startTimedMake() 
+
+        </code></pre>
+    </div>
+ </body>
+
+</html>
