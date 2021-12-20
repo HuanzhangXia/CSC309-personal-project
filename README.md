@@ -9,9 +9,9 @@ This is the personal project for CSC309.
 	```<script defer type="text/javascript" src='/youfolder/SuperBubble.js'></script>```
 
 3. The library has now been linked to the HTML file.
-# Documentation
+### Documentation
 please see: https://safe-sierra-87736.herokuapp.com/docs/index.html
-# Demo
+### Demo
 Please see: https://safe-sierra-87736.herokuapp.com
 ## Overview of functionalities
 ### SuperBubble
